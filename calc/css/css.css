@@ -23,6 +23,24 @@
     padding: 0;
 }
 
+.calc-js .sound-off{
+    border-radius: 3px;
+    position: absolute;
+    font-weight: 300;
+    font-size: 0.6em;
+    margin: 5px 0 0 24px;
+    padding: 1px 4px 2px 4px;
+    letter-spacing: -0.5px;
+    color: #666666;
+    background-color: #cccccc;
+    cursor: pointer;
+}
+
+.calc-js .sound-on{
+    color: white;
+    background-color: #4CAF50;
+}
+
 .calc-js .out-window{
     border: 2px solid rgba(0, 128, 0, 0.4);
     width: 100%;
