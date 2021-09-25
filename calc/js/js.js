@@ -180,7 +180,9 @@ function calcStart() {
         else {
             //Не вычисляет, если деление на 0 или 0 делят (умножают) на что-то или знак % в середине выражения
 
-            if (outWindowValue.slice(-2) === '/0' || outWindowValue.slice(0, 2) === '0/' || outWindowValue.slice(0, 2) === '0*' || outWindowValue.includes('%')) borderRed()
+            if (outWindowValue.slice(-2) === '/0' || outWindowValue.slice(0, 2) === '0/' || outWindowValue.slice(0, 2) === '0*' || outWindowValue.includes('%')) {
+                borderRed()
+            }
             else {
                 result = eval(outWindowValue.replace(/^0+/, ''))
                 examination(outWindow, outWindowValue)
