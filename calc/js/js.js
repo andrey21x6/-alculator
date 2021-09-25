@@ -41,7 +41,7 @@ function calcStart() {
         else if (buttonValue === '=' || buttonValue === '%') {
 
             if (lastCharacter(outWindowValue)) {
-                if (buttonValue === '%') outWindowValue += buttonValue
+                outWindowValue = plusPercentage(buttonValue, outWindowValue)
                 theOutcome(result, outWindowValue)
             }
         }
@@ -61,7 +61,12 @@ function calcStart() {
         borderRedReset()
 
         if (arrayKey.includes(event.key)) {
-            if (keyPressed !== '<' && keyPressed !== '=' && keyPressed !== 'Enter' && keyPressed !== 'Backspace' && keyPressed !== 'Delete' && keyPressed !== '%') {
+            if (keyPressed !== '<'
+                && keyPressed !== '='
+                && keyPressed !== 'Enter'
+                && keyPressed !== 'Backspace'
+                && keyPressed !== 'Delete'
+                && keyPressed !== '%') {
 
                 if (keyPressed === ',') keyPressed = '.'
 
@@ -72,7 +77,7 @@ function calcStart() {
             else if (keyPressed === '=' || keyPressed === 'Enter' || keyPressed === '%') {
 
                 if (lastCharacter(outWindowValue)) {
-                    if (keyPressed === '%') outWindowValue += keyPressed
+                    outWindowValue = plusPercentage(keyPressed, outWindowValue)
                     theOutcome(result, outWindowValue)
                 }
             }
@@ -81,17 +86,17 @@ function calcStart() {
         outMemoryExpression()
     }
 
+    function plusPercentage(symbol, outWindowValue) {
+        if (symbol === '%') return outWindowValue += symbol
+        return outWindowValue
+    }
+
     function lastCharacter(outWindowValue) {
-        if (outWindowValue.slice(-1) === '+' ||
-            outWindowValue.slice(-1) === '-' ||
-            outWindowValue.slice(-1) === '*' ||
-            outWindowValue.slice(-1) === '/' ||
-            outWindowValue.slice(-1) === '%') {
-
-            return false
-        }
-
-        return true
+        return (outWindowValue.slice(-1) !== '+'
+            && outWindowValue.slice(-1) !== '-'
+            && outWindowValue.slice(-1) !== '*'
+            && outWindowValue.slice(-1) !== '/'
+            && outWindowValue.slice(-1) !== '%')
     }
 
     function checkTwoOperators(lastChar, symbol) {
@@ -148,8 +153,8 @@ function calcStart() {
                 let operator = ''
 
                 if (result.includes('+')) operator = '+'
-                else if (outWindowValue.includes('-')) operator = '-'
-                else if (outWindowValue.includes('/')) operator = '/'
+                else if (result.includes('-')) operator = '-'
+                else if (result.includes('/')) operator = '/'
                 else borderRed()
 
                 if (operator != '' && result.split(operator).length == 2) {
@@ -170,7 +175,7 @@ function calcStart() {
             }
         }
         else {
-            //Не вычисляет, если деление на 0 или 0 делят (умножают) на что-то или знака % в середине выражения
+            //Не вычисляет, если деление на 0 или 0 делят (умножают) на что-то или знак % в середине выражения
 
             if (outWindowValue.slice(-2) === '/0' || outWindowValue.slice(0, 2) === '0/' || outWindowValue.slice(0, 2) === '0*' || outWindowValue.includes('%')) borderRed()
             else {
