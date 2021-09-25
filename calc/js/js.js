@@ -5,8 +5,10 @@ function calcStart() {
     const outMemory = document.querySelector('.calc-js .out-memory')
     const outExpression = document.querySelector('.calc-js .out-expression')
     const outWindow = document.querySelector('.calc-js .out-window')
+    const soundOff = document.querySelector('.calc-js .sound-off')
     const myAudio = new Audio
     myAudio.src = 'wav/Windows_Feed_Discovered.wav'
+    let sound = '0'
     let memory = 0
     let lastExpression = ''
     let result = 0
@@ -14,6 +16,13 @@ function calcStart() {
     outExpression.textContent = lastExpression
     document.oncontextmenu = () => false
 
+    if (localStorage.getItem('sound') != null) {
+        sound = localStorage.getItem('sound')
+
+        if (sound === '1') soundOff.classList.add('sound-on')
+    }
+
+    soundOff.addEventListener('click', soundOnOff)
     for (let value of buttonAll) value.addEventListener('click', clickMeaning)
     document.addEventListener('keydown', keykMeaning)
 
@@ -21,7 +30,8 @@ function calcStart() {
         let outWindowValue = document.querySelector('.calc-js .out-window').value
         const buttonValue = this.getAttribute('data')
 
-        myAudio.play()
+        if (sound === '1') myAudio.play()
+
         borderRedReset()
 
         if (buttonValue === 'mc') memory = 0
@@ -61,7 +71,9 @@ function calcStart() {
         const arrayKey = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '/', '*', '-', '+', '=', '%', 'Enter', '.', ',', 'Backspace', 'Delete']
         let outWindowValue = document.querySelector('.calc-js .out-window').value
         let keyPressed = event.key
-        myAudio.play()
+
+        if (sound === '1') myAudio.play()
+
         borderRedReset()
 
         if (arrayKey.includes(event.key)) {
@@ -88,6 +100,19 @@ function calcStart() {
         }
 
         outMemoryExpression()
+    }
+
+    function soundOnOff() {
+        this.classList.toggle('sound-on')
+        if (sound === '0') {
+            sound = '1'
+            localStorage.setItem('sound', '1')
+        }
+        else {
+            sound = '0'
+            localStorage.setItem('sound', '0')
+            this.classList.remove('sound-on')
+        }
     }
 
     function plusPercentage(symbol, outWindowValue) {
