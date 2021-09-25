@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang='ru'>
+
+<head>
+    <title>КАЛЬКУЛЯТОР JS</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name='robots' content='index, follow'>
+    <link rel="stylesheet" href="css/css.css">
+    <link rel='shortcut icon' href='img/favicon.png' type='image/x-icon' />
+</head>
+
+<body>
+
+    <div class="calc-js">
+
+        <h4>КАЛЬКУЛЯТОР JS</h4>
+
+        <input class="out-window" type="text" placeholder="0" disabled>
+
+        <div class="line-memory">
+            <div class="out-memory"></div>
+            <div class="out-expression"></div>
+        </div>
+
+        <div class="line lm">
+            <div class="button memory" data="mc">
+                <div>mc</div>
+            </div>
+            <div class="button memory" data="m+">
+                <div>m+</div>
+            </div>
+            <div class="button memory" data="m-">
+                <div>m-</div>
+            </div>
+            <div class="button memory" data="mr">
+                <div>mr</div>
+            </div>
+        </div>
+
+        <div class="line">
+            <div class="button ac" data="ac">
+                <div>AC</div>
+            </div>
+            <div class="button signs" id="percent" data="%">
+                <div>%</div>
+            </div>
+            <div class="button signs" data="+-">
+                <div>&plusmn;</div>
+            </div>
+            <div class="button signs division" data="/">
+                <div>&divide;</div>
+            </div>
+        </div>
+
+        <div class="line">
+            <div class="button" data="7">
+                <div>7</div>
+            </div>
+            <div class="button" data="8">
+                <div>8</div>
+            </div>
+            <div class="button" data="9">
+                <div>9</div>
+            </div>
+            <div class="button signs" data="*">
+                <div>&times;</div>
+            </div>
+        </div>
+
+        <div class="line">
+            <div class="button" data="4">
+                <div>4</div>
+            </div>
+            <div class="button" data="5">
+                <div>5</div>
+            </div>
+            <div class="button" data="6">
+                <div>6</div>
+            </div>
+            <div class="button signs minus" data="-">
+                <div>-</div>
+            </div>
+        </div>
+
+        <div class="line">
+            <div class="button" data="1">
+                <div>1</div>
+            </div>
+            <div class="button" data="2">
+                <div>2</div>
+            </div>
+            <div class="button" data="3">
+                <div>3</div>
+            </div>
+            <div class="button signs" data="+">
+                <div>+</div>
+            </div>
+        </div>
+
+        <div class="line">
+            <div class="button" data="0">
+                <div>0</div>
+            </div>
+            <div class="button" data=".">
+                <div>.</div>
+            </div>
+            <div class="button" data="<">
+                <div>&lArr;</div>
+            </div>
+            <div class="button equals" data="=">
+                <div>=</div>
+            </div>
+        </div>
+
+    </div>
+    <script src='js/js.js'></script>
+</body>
+
+</html>
