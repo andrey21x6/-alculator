@@ -5,6 +5,8 @@ function calcStart() {
     const outMemory = document.querySelector('.calc-js .out-memory')
     const outExpression = document.querySelector('.calc-js .out-expression')
     const outWindow = document.querySelector('.calc-js .out-window')
+    const myAudio = new Audio
+    myAudio.src = 'wav/Windows_Feed_Discovered.wav'
     let memory = 0
     let lastExpression = ''
     let result = 0
@@ -19,6 +21,7 @@ function calcStart() {
         let outWindowValue = document.querySelector('.calc-js .out-window').value
         const buttonValue = this.getAttribute('data')
 
+        myAudio.play()
         borderRedReset()
 
         if (buttonValue === 'mc') memory = 0
@@ -58,7 +61,7 @@ function calcStart() {
         const arrayKey = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '/', '*', '-', '+', '=', '%', 'Enter', '.', ',', 'Backspace', 'Delete']
         let outWindowValue = document.querySelector('.calc-js .out-window').value
         let keyPressed = event.key
-
+        myAudio.play()
         borderRedReset()
 
         if (arrayKey.includes(event.key)) {
