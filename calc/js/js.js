@@ -42,7 +42,8 @@ function calcStart() {
 
             if (lastCharacter(outWindowValue)) {
                 outWindowValue = plusPercentage(buttonValue, outWindowValue)
-                theOutcome(result, outWindowValue)
+                console.log(outWindowValue)
+                theOutcome(outWindowValue)
             }
         }
         else if (!buttonValue.includes('m') && buttonValue !== 'ac' && buttonValue !== '<' && buttonValue !== '=') {
@@ -78,7 +79,7 @@ function calcStart() {
 
                 if (lastCharacter(outWindowValue)) {
                     outWindowValue = plusPercentage(keyPressed, outWindowValue)
-                    theOutcome(result, outWindowValue)
+                    theOutcome(outWindowValue)
                 }
             }
         }
@@ -133,32 +134,34 @@ function calcStart() {
         return (result.toFixed(10).replace(/[,.]?0+$/, ''))      //Оставляет 10 цифр после точки ||| Удаляет все нули с хвоста, даже после точки
     }
 
-    function examination(result, outWindow, outWindowValue) {
+    function examination(outWindow, value) {
 
         if (!isNaN(result)) {
             result = processingTheResult(result)
-            lastExpression = outWindowValue + '=' + result
+            lastExpression = value + '=' + result
             outWindow.value = result
         }
         else borderRed()
     }
 
-    function theOutcome(result, outWindowValue) {
+    function theOutcome(outWindowValue) {
 
         if (outWindowValue.slice(-1) === '%') {
-            result = outWindowValue.slice(0, -1)
+            const withInterest = outWindowValue
 
-            if (result.includes('%')) borderRed()
+            outWindowValue = outWindowValue.slice(0, -1)
+
+            if (outWindowValue.includes('%')) borderRed()
             else {
                 let operator = ''
 
-                if (result.includes('+')) operator = '+'
-                else if (result.includes('-')) operator = '-'
-                else if (result.includes('/')) operator = '/'
+                if (outWindowValue.includes('+')) operator = '+'
+                else if (outWindowValue.includes('-')) operator = '-'
+                else if (outWindowValue.includes('/')) operator = '/'
                 else borderRed()
 
-                if (operator != '' && result.split(operator).length == 2) {
-                    const arrayNumbers = result.split(operator)
+                if (operator != '' && outWindowValue.split(operator).length == 2) {
+                    const arrayNumbers = outWindowValue.split(operator)
 
                     switch (operator) {
                         case '+': result = Number(arrayNumbers[0]) + (Number(arrayNumbers[0]) / 100 * Number(arrayNumbers[1])); break
@@ -166,7 +169,7 @@ function calcStart() {
                         case '/': result = 100 / Number(arrayNumbers[1]) * Number(arrayNumbers[0]); break
                     }
 
-                    examination(result, outWindow, outWindowValue)
+                    examination(outWindow, withInterest)
                 }
                 else {
                     result = outWindowValue
@@ -180,7 +183,7 @@ function calcStart() {
             if (outWindowValue.slice(-2) === '/0' || outWindowValue.slice(0, 2) === '0/' || outWindowValue.slice(0, 2) === '0*' || outWindowValue.includes('%')) borderRed()
             else {
                 result = eval(outWindowValue.replace(/^0+/, ''))
-                examination(result, outWindow, outWindowValue)
+                examination(outWindow, outWindowValue)
             }
         }
     }
