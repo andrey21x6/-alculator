@@ -39,7 +39,6 @@
     color: #666666;
     background-color: #cccccc;
     cursor: pointer;
-    
 }
 
 .calc-js .sound-on{
@@ -74,12 +73,11 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap-reverse;
-    min-height: 8px;
+    min-height: 28px;
     margin-top: 8px;
 }
 
 .calc-js .out-memory{
-    height: 16px;
 	min-width: 7px;
     border: 1px solid green;
     font-size: 0.5em;
