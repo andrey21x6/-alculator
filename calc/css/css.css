@@ -23,17 +23,23 @@
     padding: 0;
 }
 
+.calc-js .wrap-sound{
+    margin: -18px 0 6px 0;
+    display: grid;
+    place-items: end;
+}
+
 .calc-js .sound-off{
     border-radius: 3px;
-    position: absolute;
+
     font-weight: 300;
-    font-size: 0.6em;
-    margin: 5px 0 0 24px;
-    padding: 1px 4px 2px 4px;
+    font-size: 0.5em;
+    padding: 0px 4px 1px 4px;
     letter-spacing: -0.5px;
     color: #666666;
     background-color: #cccccc;
     cursor: pointer;
+    
 }
 
 .calc-js .sound-on{
@@ -45,6 +51,7 @@
     border: 2px solid rgba(0, 128, 0, 0.4);
     width: 100%;
     text-align: right;
+    letter-spacing: -1.2px;
     padding: 5px;
     font-size: 1em;
     font-weight: 500;
@@ -72,6 +79,8 @@
 }
 
 .calc-js .out-memory{
+    height: 16px;
+	min-width: 7px;
     border: 1px solid green;
     font-size: 0.5em;
     padding: 4px 6px 4px 6px;
