@@ -130,7 +130,7 @@ function calcStart() {
 
     function checkTwoOperators(lastChar, symbol) {
         const twoOperators = lastChar + symbol
-        const arraySymbol = ['+', '-', '*', '/', '%']
+        const arraySymbol = ['+', '-', '*', '/', '%', '.']
 
         for (let i = 0; i < arraySymbol.length; i++) {
             for (let k = 0; k < arraySymbol.length; k++) {
