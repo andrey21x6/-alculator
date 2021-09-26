@@ -55,7 +55,6 @@ function calcStart() {
 
             if (lastCharacter(outWindowValue)) {
                 outWindowValue = plusPercentage(buttonValue, outWindowValue)
-                console.log(outWindowValue)
                 theOutcome(outWindowValue)
             }
         }
