@@ -25,11 +25,12 @@ function calc() {
         outputValueInput(eval(readTheValueInput()))
     }
 
-    function CheckingAValueTnAnArray(value, array, index = 0) {
+    function checkingAValueTnAnArray(value, array, index = 0) {
         return (array.includes(value, index))
     }
 
     function plusMinus(value) {
+
         if (readTheValueInput().slice(-1) === '+') {
             return '-'
         }
@@ -37,7 +38,7 @@ function calc() {
             return '+'
         }
 
-        return value
+        return
     }
 
     function characterProcessing(value) {
@@ -46,11 +47,11 @@ function calc() {
         if (value === '+-') {
             value = plusMinus(value)
         }
-        else if (CheckingAValueTnAnArray(value, array, 13) && CheckingAValueTnAnArray(readTheValueInput().slice(-1), array, 13)) {
+        else if (checkingAValueTnAnArray(value, array, 13) && checkingAValueTnAnArray(readTheValueInput().slice(-1), array, 13)) {
             outputValueInput(readTheValueInput().slice(0, -1))
         }
 
-        if (CheckingAValueTnAnArray(value, array)) {
+        if (checkingAValueTnAnArray(value, array)) {
             outputValueInput(readTheValueInput() + value)
         }
         else if (value === '=') {
