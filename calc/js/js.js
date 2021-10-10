@@ -115,10 +115,8 @@ function calc() {
     function checkFirstCharacter(value) {
         const array = ['%', '*', '/', '+', '.']
 
-        if (readTheValueInput() === '' && array.includes(value)) {
-            return ''
-        }
-        else if (readTheValueInput().length == 1 && readTheValueInput().includes('-') && array.includes(value)) {
+        if ((readTheValueInput() === '' && array.includes(value))
+            || (readTheValueInput().length == 1 && readTheValueInput().includes('-') && array.includes(value))) {
             return ''
         }
 
