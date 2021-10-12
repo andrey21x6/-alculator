@@ -137,10 +137,16 @@ function calc() {
         }
 
         if (readTheValueInput().length >= lineLength) {
-            const result = processingTheResult(eval(readTheValueInput()))
+            
+            if (readTheValueInput().slice(-2) === '/0' || readTheValueInput().slice(0, 2) === '0/' || readTheValueInput().slice(0, 2) === '0*') {
+                setBorderRed()
+            }
+            else {
+                const result = processingTheResult(eval(readTheValueInput()))
 
-            writeValueOutExpression(readTheValueInput(), result)
-            writeValueInput(result)
+                writeValueOutExpression(readTheValueInput(), result)
+                writeValueInput(result)
+            }
         }
     }
 
