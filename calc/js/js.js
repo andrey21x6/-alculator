@@ -8,7 +8,6 @@ function calc() {
     const outMemory = '.calc-js .out-memory'
 
     writeValueOutMemory()
-
     document.oncontextmenu = () => false
     document.addEventListener('keydown', getKeyCharacter)
 
@@ -77,7 +76,6 @@ function calc() {
             setBorderRed()
         }
         else {
-            //const operatorArray = []
 
             if (readTheValueInput().includes('+') && readTheValueInput().split('+').length == 2) {
                 const arrayNumbers = readTheValueInput().split('+')
