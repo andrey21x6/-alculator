@@ -6,7 +6,7 @@ function calc() {
     const input = '.calc-js .out-window'
     const outExpression = '.calc-js .out-expression'
     const outMemory = '.calc-js .out-memory'
-    
+
     document.oncontextmenu = () => false
     writeValueOutMemory()
     document.addEventListener('keydown', getKeyCharacter)
@@ -14,7 +14,7 @@ function calc() {
     for (let value of document.querySelectorAll('.calc-js .button')) {
         value.addEventListener('click', clickMeaning)
     }
-    
+
     //-------------------------------------------------------------------------------------------
 
     function characterProcessing(value) {
@@ -137,15 +137,15 @@ function calc() {
         }
 
         if (readTheValueInput().length >= lineLength) {
-            
-            if (readTheValueInput().slice(-2) === '/0' || readTheValueInput().slice(0, 2) === '0/' || readTheValueInput().slice(0, 2) === '0*') {
-                setBorderRed()
-            }
-            else {
+
+            if (checkExpression(readTheValueInput())) {
                 const result = processingTheResult(eval(readTheValueInput()))
 
                 writeValueOutExpression(readTheValueInput(), result)
                 writeValueInput(result)
+            }
+            else {
+                setBorderRed()
             }
         }
     }
@@ -157,8 +157,13 @@ function calc() {
     function checkFirstCharacter(value) {
         const array = ['%', '*', '/', '+', '.']
 
-        if ((readTheValueInput() === '' && array.includes(value)) ||
-            (readTheValueInput().length == 1 && readTheValueInput().includes('-') && array.includes(value))) {
+        if (readTheValueInput() === '' && array.includes(value)) {
+
+            return ''
+        }
+        else if (readTheValueInput().length == 1 && ((readTheValueInput().includes('-') && array.includes(value))
+            || (readTheValueInput().includes('0') && value === '0'))) {
+
             return ''
         }
 
@@ -190,6 +195,15 @@ function calc() {
         }
 
         return
+    }
+
+    function checkExpression() {
+
+        if (readTheValueInput().slice(-2) === '/0' || readTheValueInput().slice(0, 2) === '0/' || readTheValueInput().slice(0, 2) === '0*') {
+            return false
+        }
+
+        return true
     }
 
     function processingTheResult(value) {
