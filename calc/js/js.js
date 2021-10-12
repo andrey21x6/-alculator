@@ -6,15 +6,15 @@ function calc() {
     const input = '.calc-js .out-window'
     const outExpression = '.calc-js .out-expression'
     const outMemory = '.calc-js .out-memory'
-
-    writeValueOutMemory()
+    
     document.oncontextmenu = () => false
+    writeValueOutMemory()
     document.addEventListener('keydown', getKeyCharacter)
 
     for (let value of document.querySelectorAll('.calc-js .button')) {
         value.addEventListener('click', clickMeaning)
     }
-
+    
     //-------------------------------------------------------------------------------------------
 
     function characterProcessing(value) {
