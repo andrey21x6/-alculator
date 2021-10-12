@@ -4,6 +4,10 @@ calc()
 
 function calc() {
     const input = '.calc-js .out-window'
+    const outExpression = '.calc-js .out-expression'
+    const outMemory = '.calc-js .out-memory'
+
+    writeValueOutMemory()
 
     document.oncontextmenu = () => false
     document.addEventListener('keydown', getKeyCharacter)
@@ -47,6 +51,24 @@ function calc() {
         else if (value === '<') {
             writeValueInput(readTheValueInput().slice(0, -1))
         }
+        else if (value === 'm+') {
+
+            if (readTheValueInput() != 0 && !isNaN(Number(readTheValueInput()))) {
+                writeValueOutMemory(processingTheResult(Number(readValueOutMemory()) + Number(readTheValueInput())))
+            }
+        }
+        else if (value === 'm-') {
+
+            if (readTheValueInput() != 0 && !isNaN(Number(readTheValueInput()))) {
+                writeValueOutMemory(processingTheResult(Number(readValueOutMemory()) - Number(readTheValueInput())))
+            }
+        }
+        else if (value === 'mr') {
+            writeValueInput(readValueOutMemory())
+        }
+        else if (value === 'mc') {
+            writeValueOutMemory(0)
+        }
     }
 
     function calculateThePercentage() {
@@ -55,26 +77,27 @@ function calc() {
             setBorderRed()
         }
         else {
+            //const operatorArray = []
 
             if (readTheValueInput().includes('+') && readTheValueInput().split('+').length == 2) {
                 const arrayNumbers = readTheValueInput().split('+')
 
                 if (arrayNumbers[1] !== '') {
-                    writeValueInput(Number(arrayNumbers[0]) + (Number(arrayNumbers[0]) / 100 * Number(arrayNumbers[1])))
+                    writeValueInput(processingTheResult(Number(arrayNumbers[0]) + (Number(arrayNumbers[0]) / 100 * Number(arrayNumbers[1]))))
                 }
             }
             else if (readTheValueInput().includes('-') && readTheValueInput().split('-').length == 2) {
                 const arrayNumbers = readTheValueInput().split('-')
 
                 if (arrayNumbers[1] !== '') {
-                    writeValueInput(Number(arrayNumbers[0]) - (Number(arrayNumbers[0]) / 100 * Number(arrayNumbers[1])))
+                    writeValueInput(processingTheResult(Number(arrayNumbers[0]) - (Number(arrayNumbers[0]) / 100 * Number(arrayNumbers[1]))))
                 }
             }
             else if (readTheValueInput().includes('/') && readTheValueInput().split('/').length == 2) {
                 const arrayNumbers = readTheValueInput().split('/')
 
                 if (arrayNumbers[1] !== '') {
-                    writeValueInput(100 / Number(arrayNumbers[1]) * Number(arrayNumbers[0]))
+                    writeValueInput(processingTheResult(100 / Number(arrayNumbers[1]) * Number(arrayNumbers[0])))
                 }
             }
         }
@@ -96,6 +119,18 @@ function calc() {
         document.querySelector(input).value = string
     }
 
+    function writeValueOutExpression(string, result) {
+        document.querySelector(outExpression).textContent = string + '=' + result
+    }
+
+    function readValueOutMemory() {
+        return document.querySelector(outMemory).textContent
+    }
+
+    function writeValueOutMemory(result = 0) {
+        document.querySelector(outMemory).textContent = result
+    }
+
     function evaluateExpression() {
         let lineLength = 3
 
@@ -104,7 +139,10 @@ function calc() {
         }
 
         if (readTheValueInput().length >= lineLength) {
-            writeValueInput(eval(readTheValueInput()))
+            const result = processingTheResult(eval(readTheValueInput()))
+
+            writeValueOutExpression(readTheValueInput(), result)
+            writeValueInput(result)
         }
     }
 
@@ -148,6 +186,10 @@ function calc() {
         }
 
         return
+    }
+
+    function processingTheResult(value) {
+        return (value.toFixed(10).replace(/[,.]?0+$/, ''))   //Оставляет 10 цифр после точки ||| Удаляет все нули с хвоста, даже после точки
     }
 
     function setBorderRed() {
