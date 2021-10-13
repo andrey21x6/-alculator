@@ -59,8 +59,14 @@ function calc() {
             writeValueInput(removeSpaces(readTheValueInput()))
             writeValueInput(readTheValueInput() + value)
         }
-        else if (value === '=' && !(readTheValueInput().slice(-2) === '+-')) {
-            evaluateExpression()
+        else if (value === '=') {
+
+            if (readTheValueInput().slice(-2) === '+-') {
+                setBorderRed()
+            }
+            else {
+                evaluateExpression()
+            }
         }
         else if (value === 'ac') {
             writeValueInput('')
@@ -79,9 +85,6 @@ function calc() {
         }
         else if (value === 'mc') {
             writeValueOutMemory(0)
-        }
-        else {
-            setBorderRed()
         }
     }
 
