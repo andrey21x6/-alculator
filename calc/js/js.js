@@ -53,6 +53,7 @@ function calc() {
             calculateThePercentage()
         }
         else if (checkingAValueTnAnArray(value, array)) {
+            writeValueInput(removeSpaces(readTheValueInput()))
             writeValueInput(readTheValueInput() + value)
         }
         else if (value === '=') {
@@ -65,22 +66,24 @@ function calc() {
             writeValueInput(readTheValueInput().slice(0, -1))
         }
         else if (value === 'm+') {
-
-            if (readTheValueInput() != 0 && !isNaN(Number(readTheValueInput()))) {
-                writeValueOutMemory(processingTheResult(Number(readValueOutMemory()) + Number(readTheValueInput())))
-            }
+            memoryComputation('+')
         }
         else if (value === 'm-') {
-
-            if (readTheValueInput() != 0 && !isNaN(Number(readTheValueInput()))) {
-                writeValueOutMemory(processingTheResult(Number(readValueOutMemory()) - Number(readTheValueInput())))
-            }
+            memoryComputation('-')
         }
         else if (value === 'mr') {
-            writeValueInput(readValueOutMemory())
+            writeValueInput(numberWithSpaces(readValueOutMemory()))
         }
         else if (value === 'mc') {
             writeValueOutMemory(0)
+        }
+    }
+
+    function memoryComputation(operator) {
+        const valInput = removeSpaces(readTheValueInput())
+
+        if (valInput != 0 && !isNaN(Number(valInput))) {
+            writeValueOutMemory(processingTheResult(eval(readValueOutMemory() + operator + valInput)))
         }
     }
 
@@ -106,10 +109,10 @@ function calc() {
             if (arrayNumbers[1] !== '') {
 
                 if (operator === '/') {
-                    writeValueInput(processingTheResult(eval(100 + operator + arrayNumbers[1] * arrayNumbers[0])))
+                    writeValueInput(numberWithSpaces(processingTheResult(eval(100 + operator + arrayNumbers[1] * arrayNumbers[0]))))
                 }
                 else {
-                    writeValueInput(processingTheResult(eval(arrayNumbers[0] + operator + arrayNumbers[0] / 100 * arrayNumbers[1])))
+                    writeValueInput(numberWithSpaces(processingTheResult(eval(arrayNumbers[0] + operator + arrayNumbers[0] / 100 * arrayNumbers[1]))))
                 }
             }
         }
@@ -153,7 +156,9 @@ function calc() {
         if (readTheValueInput().length >= lineLength) {
 
             if (checkExpression(readTheValueInput())) {
-                const result = processingTheResult(eval(readTheValueInput()))
+                let result = processingTheResult(eval(readTheValueInput()))
+
+                result = numberWithSpaces(result)
 
                 writeValueOutExpression(readTheValueInput(), result)
                 writeValueInput(result)
@@ -175,7 +180,7 @@ function calc() {
 
             return ''
         }
-        
+
         if (readTheValueInput().length == 1 && ((readTheValueInput().includes('-') && array.includes(value))
             || (readTheValueInput().includes('0') && value === '0'))) {
 
@@ -237,6 +242,14 @@ function calc() {
             localStorage.setItem('sound', '0')
             this.classList.remove('sound-on')
         }
+    }
+
+    function numberWithSpaces(number) {
+        return number.replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1 ')
+    }
+
+    function removeSpaces(string) {
+        return string.replace(/\s/g, '')
     }
 
     function setBorderRed() {
