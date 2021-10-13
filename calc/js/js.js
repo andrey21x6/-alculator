@@ -6,8 +6,19 @@ function calc() {
     const input = '.calc-js .out-window'
     const outExpression = '.calc-js .out-expression'
     const outMemory = '.calc-js .out-memory'
+    const soundOff = document.querySelector('.calc-js .sound-off')
+    const myAudio = new Audio
+    let sound = '0'
+    myAudio.src = 'wav/Windows_Feed_Discovered.wav'
+
+    if (localStorage.getItem('sound') != null) {
+        sound = localStorage.getItem('sound')
+
+        if (sound === '1') soundOff.classList.add('sound-on')
+    }
 
     document.oncontextmenu = () => false
+    soundOff.addEventListener('click', soundOnOff)
     writeValueOutMemory()
     document.addEventListener('keydown', getKeyCharacter)
 
@@ -15,7 +26,7 @@ function calc() {
         value.addEventListener('click', clickMeaning)
     }
 
-    //-------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------------------
 
     function characterProcessing(value) {
         const array = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '.']
@@ -23,6 +34,7 @@ function calc() {
         value = keyValueReplacement(value)
         value = checkFirstCharacter(value)
 
+        if (sound === '1') myAudio.play()
         setBorderGreen()
 
         if (value === '+-') {
@@ -72,30 +84,30 @@ function calc() {
 
     function calculateThePercentage() {
 
-        if (readTheValueInput().includes('%')) {
-            setBorderRed()
+        if (readTheValueInput().includes('+')) {
+            getValueFromPercent('+')
         }
-        else {
+        else if (readTheValueInput().includes('-')) {
+            getValueFromPercent('-')
+        }
+        else if (readTheValueInput().includes('/')) {
+            getValueFromPercent('/')
+        }
+    }
 
-            if (readTheValueInput().includes('+') && readTheValueInput().split('+').length == 2) {
-                const arrayNumbers = readTheValueInput().split('+')
+    function getValueFromPercent(operator) {
 
-                if (arrayNumbers[1] !== '') {
-                    writeValueInput(processingTheResult(Number(arrayNumbers[0]) + (Number(arrayNumbers[0]) / 100 * Number(arrayNumbers[1]))))
+        if (operator === '+' || operator === '-' || operator === '/') {
+
+            const arrayNumbers = readTheValueInput().split(operator)
+
+            if (arrayNumbers[1] !== '') {
+
+                if (operator === '/') {
+                    writeValueInput(processingTheResult(eval(100 + operator + arrayNumbers[1] * arrayNumbers[0])))
                 }
-            }
-            else if (readTheValueInput().includes('-') && readTheValueInput().split('-').length == 2) {
-                const arrayNumbers = readTheValueInput().split('-')
-
-                if (arrayNumbers[1] !== '') {
-                    writeValueInput(processingTheResult(Number(arrayNumbers[0]) - (Number(arrayNumbers[0]) / 100 * Number(arrayNumbers[1]))))
-                }
-            }
-            else if (readTheValueInput().includes('/') && readTheValueInput().split('/').length == 2) {
-                const arrayNumbers = readTheValueInput().split('/')
-
-                if (arrayNumbers[1] !== '') {
-                    writeValueInput(processingTheResult(100 / Number(arrayNumbers[1]) * Number(arrayNumbers[0])))
+                else {
+                    writeValueInput(processingTheResult(eval(arrayNumbers[0] + operator + arrayNumbers[0] / 100 * arrayNumbers[1])))
                 }
             }
         }
@@ -208,6 +220,19 @@ function calc() {
 
     function processingTheResult(value) {
         return (value.toFixed(10).replace(/[,.]?0+$/, ''))   //Оставляет 10 цифр после точки ||| Удаляет все нули с хвоста, даже после точки
+    }
+
+    function soundOnOff() {
+        this.classList.toggle('sound-on')
+        if (sound === '0') {
+            sound = '1'
+            localStorage.setItem('sound', '1')
+        }
+        else {
+            sound = '0'
+            localStorage.setItem('sound', '0')
+            this.classList.remove('sound-on')
+        }
     }
 
     function setBorderRed() {
