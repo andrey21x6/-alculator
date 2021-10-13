@@ -39,12 +39,15 @@ function calc() {
         if (sound === '1') myAudio.play()
         setBorderGreen()
 
-        if (value === '+-') {
-            value = plusMinus(value)
+        if (value === '+-' && readTheValueInput().length != 1 && readTheValueInput().slice(-1) === '+') {
+            value = '-'
         }
         else {
 
-            if (checkingAValueTnAnArray(value, array, 10) && checkingAValueTnAnArray(readTheValueInput().slice(-1), array, 10)) {
+            if (readTheValueInput().slice(-2) === '+-' && checkingAValueTnAnArray(value, array, 10)) {
+                value = ''
+            }
+            else if (checkingAValueTnAnArray(value, array, 10) && checkingAValueTnAnArray(readTheValueInput().slice(-1), array, 10)) {
                 writeValueInput(readTheValueInput().slice(0, -1))
             }
         }
@@ -57,7 +60,10 @@ function calc() {
             writeValueInput(readTheValueInput() + value)
         }
         else if (value === '=') {
-            evaluateExpression()
+
+            if (!(readTheValueInput().slice(-2) === '+-')) {
+                evaluateExpression()
+            }
         }
         else if (value === 'ac') {
             writeValueInput('')
@@ -106,7 +112,7 @@ function calc() {
 
             const arrayNumbers = readTheValueInput().split(operator)
 
-            if (arrayNumbers[1] !== '') {
+            if (arrayNumbers[1] !== '' && arrayNumbers[1] !== '-') {
 
                 if (operator === '/') {
                     writeValueInput(numberWithSpaces(processingTheResult(eval(100 + operator + arrayNumbers[1] * arrayNumbers[0]))))
@@ -200,21 +206,6 @@ function calc() {
         }
 
         return value
-    }
-
-    function plusMinus(value) {
-
-        if (readTheValueInput().length != 1) {
-
-            if (readTheValueInput().slice(-1) === '+') {
-                return '-'
-            }
-            else if (readTheValueInput().slice(-1) === '-') {
-                return '+'
-            }
-        }
-
-        return
     }
 
     function checkExpression() {
