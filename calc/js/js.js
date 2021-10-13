@@ -75,10 +75,13 @@ function calc() {
             memoryComputation('-')
         }
         else if (value === 'mr') {
-            writeValueInput(numberWithSpaces(readValueOutMemory()))
+            writeValueInput(readTheValueInput() + numberWithSpaces(readValueOutMemory()))
         }
         else if (value === 'mc') {
             writeValueOutMemory(0)
+        }
+        else {
+            setBorderRed()
         }
     }
 
