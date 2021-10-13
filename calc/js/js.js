@@ -175,7 +175,8 @@ function calc() {
 
             return ''
         }
-        else if (readTheValueInput().length == 1 && ((readTheValueInput().includes('-') && array.includes(value))
+        
+        if (readTheValueInput().length == 1 && ((readTheValueInput().includes('-') && array.includes(value))
             || (readTheValueInput().includes('0') && value === '0'))) {
 
             return ''
@@ -226,7 +227,7 @@ function calc() {
 
     function soundOnOff() {
         this.classList.toggle('sound-on')
-        
+
         if (sound === '0') {
             sound = '1'
             localStorage.setItem('sound', '1')
