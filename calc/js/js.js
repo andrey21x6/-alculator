@@ -14,7 +14,9 @@ function calc() {
     if (localStorage.getItem('sound') != null) {
         sound = localStorage.getItem('sound')
 
-        if (sound === '1') soundOff.classList.add('sound-on')
+        if (sound === '1') {
+            soundOff.classList.add('sound-on')
+        }
     }
 
     document.oncontextmenu = () => false
@@ -224,6 +226,7 @@ function calc() {
 
     function soundOnOff() {
         this.classList.toggle('sound-on')
+        
         if (sound === '0') {
             sound = '1'
             localStorage.setItem('sound', '1')
