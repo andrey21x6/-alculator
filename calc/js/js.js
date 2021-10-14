@@ -37,7 +37,7 @@ function calc() {
         value = checkFirstCharacter(value)
 
         if (sound === '1') myAudio.play()
-        setBorderGreen()
+        setBorderColor()
 
         if (value === '+-' && readTheValueInput().length != 1 && readTheValueInput().slice(-1) === '+') {
             value = '-'
@@ -62,7 +62,7 @@ function calc() {
         else if (value === '=') {
 
             if (readTheValueInput().slice(-2) === '+-') {
-                setBorderRed()
+                setBorderColor('red')
             }
             else {
                 evaluateExpression()
@@ -110,19 +110,15 @@ function calc() {
     }
 
     function getValueFromPercent(operator) {
+        const arrayNumbers = readTheValueInput().split(operator)
 
-        if (operator === '+' || operator === '-' || operator === '/') {
+        if (arrayNumbers[1] !== '' && arrayNumbers[1] !== '-') {
 
-            const arrayNumbers = readTheValueInput().split(operator)
-
-            if (arrayNumbers[1] !== '' && arrayNumbers[1] !== '-') {
-
-                if (operator === '/') {
-                    writeValueInput(numberWithSpaces(processingTheResult(eval(100 + operator + arrayNumbers[1] * arrayNumbers[0]))))
-                }
-                else {
-                    writeValueInput(numberWithSpaces(processingTheResult(eval(arrayNumbers[0] + operator + arrayNumbers[0] / 100 * arrayNumbers[1]))))
-                }
+            if (operator === '/') {
+                writeValueInput(numberWithSpaces(processingTheResult(eval(100 + operator + arrayNumbers[1] * arrayNumbers[0]))))
+            }
+            else {
+                writeValueInput(numberWithSpaces(processingTheResult(eval(arrayNumbers[0] + operator + arrayNumbers[0] / 100 * arrayNumbers[1]))))
             }
         }
     }
@@ -139,12 +135,12 @@ function calc() {
         return document.querySelector(input).value
     }
 
-    function writeValueInput(string) {
-        document.querySelector(input).value = string
+    function writeValueInput(str) {
+        document.querySelector(input).value = str
     }
 
-    function writeValueOutExpression(string, result) {
-        document.querySelector(outExpression).textContent = string + '=' + result
+    function writeValueOutExpression(str, result) {
+        document.querySelector(outExpression).textContent = str + '=' + result
     }
 
     function readValueOutMemory() {
@@ -173,7 +169,7 @@ function calc() {
                 writeValueInput(result)
             }
             else {
-                setBorderRed()
+                setBorderColor('red')
             }
         }
     }
@@ -242,15 +238,11 @@ function calc() {
         return number.replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1 ')
     }
 
-    function removeSpaces(string) {
-        return string.replace(/\s/g, '')
+    function removeSpaces(str) {
+        return str.replace(/\s/g, '')
     }
 
-    function setBorderRed() {
-        document.querySelector(input).style.borderColor = 'red'
-    }
-
-    function setBorderGreen() {
-        document.querySelector(input).style.borderColor = 'rgba(0, 128, 0, 0.4)'
+    function setBorderColor(color = 'rgba(0, 128, 0, 0.4)') {
+        document.querySelector(input).style.borderColor = color
     }
 }
