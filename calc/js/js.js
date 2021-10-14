@@ -35,9 +35,11 @@ function calc() {
 
         value = keyValueReplacement(value)
         value = checkFirstCharacter(value)
-
-        if (sound === '1') myAudio.play()
         setBorderColor()
+
+        if (sound === '1') {
+            myAudio.play()
+        }
 
         if (value === '+-' && readTheValueInput().length != 1 && readTheValueInput().slice(-1) === '+') {
             value = '-'
@@ -52,39 +54,25 @@ function calc() {
             }
         }
 
-        if (value === '%') {
-            calculateThePercentage()
-        }
-        else if (checkingAValueTnAnArray(value, array)) {
-            writeValueInput(removeSpaces(readTheValueInput()))
-            writeValueInput(readTheValueInput() + value)
-        }
-        else if (value === '=') {
-
-            if (readTheValueInput().slice(-2) === '+-') {
-                setBorderColor('red')
-            }
-            else {
-                evaluateExpression()
-            }
-        }
-        else if (value === 'ac') {
-            writeValueInput('')
-        }
-        else if (value === '<') {
-            writeValueInput(readTheValueInput().slice(0, -1))
-        }
-        else if (value === 'm+') {
-            memoryComputation('+')
-        }
-        else if (value === 'm-') {
-            memoryComputation('-')
-        }
-        else if (value === 'mr') {
-            writeValueInput(readTheValueInput() + numberWithSpaces(readValueOutMemory()))
-        }
-        else if (value === 'mc') {
-            writeValueOutMemory(0)
+        switch (value) {
+            case '%': calculateThePercentage(); break
+            case 'ac': writeValueInput(''); break
+            case '<': writeValueInput(readTheValueInput().slice(0, -1)); break
+            case 'm+': memoryComputation('+'); break
+            case 'm-': memoryComputation('-'); break
+            case 'mr': writeValueInput(readTheValueInput() + numberWithSpaces(readValueOutMemory())); break
+            case 'mc': writeValueOutMemory(); break
+            case '=':
+                if (readTheValueInput().slice(-2) === '+-') {
+                    setBorderColor('red')
+                }
+                else {
+                    evaluateExpression()
+                }
+                break
+            default:
+                writeValueInput(removeSpaces(readTheValueInput()))
+                writeValueInput(readTheValueInput() + value)
         }
     }
 
