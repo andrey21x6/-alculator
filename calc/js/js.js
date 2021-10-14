@@ -32,8 +32,6 @@ function calc() {
 
     function characterProcessing(value) {
         const array = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '.']
-
-        value = keyValueReplacement(value)
         value = checkFirstCharacter(value)
         setBorderColor()
 
@@ -71,8 +69,10 @@ function calc() {
                 }
                 break
             default:
-                writeValueInput(removeSpaces(readTheValueInput()))
-                writeValueInput(readTheValueInput() + value)
+                if (value !== '+-') {
+                    writeValueInput(removeSpaces(readTheValueInput()))
+                    writeValueInput(readTheValueInput() + value)
+                }
         }
     }
 
@@ -116,7 +116,13 @@ function calc() {
     }
 
     function getKeyCharacter(event) {
-        characterProcessing(event.key)
+        const array = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', 'ac', '%', '=', '<', '.']
+        let keySymbol = event.key
+        keySymbol = keyValueReplacement(keySymbol)
+
+        if (checkingAValueTnAnArray(keySymbol, array)) {
+            characterProcessing(keySymbol)
+        }
     }
 
     function readTheValueInput() {
