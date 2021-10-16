@@ -202,12 +202,7 @@ function calc() {
     }
 
     function checkExpression() {
-
-        if (readTheValueInput().slice(-2) === '/0' || readTheValueInput().slice(0, 2) === '0/' || readTheValueInput().slice(0, 2) === '0*') {
-            return false
-        }
-
-        return true
+        return !(readTheValueInput().slice(-2) === '/0' || readTheValueInput().slice(0, 2) === '0/' || readTheValueInput().slice(0, 2) === '0*')
     }
 
     function processingTheResult(value) {
