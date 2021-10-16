@@ -38,7 +38,7 @@ function calc() {
 
     function characterProcessing(value) {
         let keyValue = checkFirstCharacter(value)
-        setBorderColor()
+        setBorderColor('rgba(0, 128, 0, 0.4)')
 
         if (sound === '1') {
             myAudio.play()
@@ -236,7 +236,7 @@ function calc() {
         return str.replace(/\s/g, '')
     }
 
-    function setBorderColor(color = 'rgba(0, 128, 0, 0.4)') {
+    function setBorderColor(color) {
         document.querySelector(input).style.borderColor = color
     }
 }
