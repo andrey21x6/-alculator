@@ -1,180 +1,124 @@
+<!DOCTYPE html>
+<html lang='ru'>
 
-.calc-js{
-    border: 1.2px solid green;
-    margin: 0 auto;
-    font-family: 'Calibri', 'Trebuchet MS';
-    font-size: 28px;
-    text-align: center;
-    width: 300px;
-    min-height: 400px;
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 3px;
-    background-color: #f5f5f5;
-    -ms-user-select: none;       /* Запретить выделение текста */
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-}
+<head>
+    <title>КАЛЬКУЛЯТОР JS</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name='robots' content='index, follow'>
+    <link rel="stylesheet" href="css/css.css">
+    <link rel='shortcut icon' href='img/favicon.png' type='image/x-icon' />
+</head>
 
-.calc-js h4{
-    font-size: 0.7em;
-    margin: 0 0 3% 0;
-    padding: 0;
-}
+<body>
 
-.calc-js .wrap-sound{
-    margin: -18px 0 6px 0;
-    display: grid;
-    place-items: end;
-}
+    <div class="calc-js">
 
-.calc-js .sound-off{
-    border-radius: 3px;
+        <h4>КАЛЬКУЛЯТОР JS</h4>
 
-    font-weight: 300;
-    font-size: 0.5em;
-    padding: 0px 4px 1px 4px;
-    letter-spacing: -0.5px;
-    color: #666666;
-    background-color: #cccccc;
-    cursor: pointer;
-}
+        <div class="wrap-sound">
+            <div class="sound-off">Sound</div>
+        </div>
 
-.calc-js .sound-on{
-    color: white;
-    background-color: #4CAF50;
-}
+        <input class="out-window" type="text" placeholder="0" disabled>
 
-.calc-js .out-window{
-    border: 2px solid rgba(0, 128, 0, 0.4);
-    width: 100%;
-    text-align: right;
-    letter-spacing: -1.2px;
-    padding: 5px;
-    font-size: 1em;
-    font-weight: 500;
-    background-color: white;
-    border-radius: 3px;
-    box-sizing : border-box;     /* Для предотвращения влияния заполнения на элемент */
-    user-select: auto;           /* Разрешить выделение текста */
-    -ms-user-select: auto;
-    -moz-user-select: auto;
-    -khtml-user-select: auto;
-    -webkit-user-select: auto;
-}
+        <div class="line-memory">
+            <div class="out-memory"></div>
+            <div class="out-expression"></div>
+        </div>
 
-.calc-js ::placeholder { 
-    font-weight: 300;
-    color: red;
-}
+        <div class="line lm">
+            <div class="button memory">
+                <div class="button-data" data-key="mc">mc</div>
+            </div>
+            <div class="button memory">
+                <div class="button-data" data-key="m+">m+</div>
+            </div>
+            <div class="button memory">
+                <div class="button-data" data-key="m-">m-</div>
+            </div>
+            <div class="button memory">
+                <div class="button-data" data-key="mr">mr</div>
+            </div>
+        </div>
 
-.calc-js .line-memory{
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap-reverse;
-    min-height: 8px;
-    margin-top: 8px;
-}
+        <div class="line">
+            <div class="button ac">
+                <div class="button-data" data-key="ac">AC</div>
+            </div>
+            <div class="button signs">
+                <div class="button-data" data-key="%">%</div>
+            </div>
+            <div class="button signs">
+                <div class="button-data" data-key="+-">&plusmn;</div>
+            </div>
+            <div class="button signs division">
+                <div class="button-data" data-key="/">&divide;</div>
+            </div>
+        </div>
 
-.calc-js .out-memory{
-    height: 16px;
-	min-width: 7px;
-    border: 1px solid green;
-    font-size: 0.5em;
-    padding: 4px 6px 4px 6px;
-    text-align: left;
-    border-radius: 3px;
-    background-color: #f5f5f5;
-}
+        <div class="line">
+            <div class="button">
+                <div class="button-data" data-key="7">7</div>
+            </div>
+            <div class="button">
+                <div class="button-data" data-key="8">8</div>
+            </div>
+            <div class="button">
+                <div class="button-data" data-key="9">9</div>
+            </div>
+            <div class="button signs">
+                <div class="button-data" data-key="*">&times;</div>
+            </div>
+        </div>
 
-.calc-js .out-expression{
-    border: 1px solid rgba(000, 000, 000, 0);
-    font-size: 0.5em;
-    padding: 4px 6px 4px 6px;
-    text-align: left;
-    background-color: #f5f5f5;
-    word-break: break-all;
-    user-select: none;          /* Запрет выделения текста */
-    -ms-user-select: none;       
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-}
+        <div class="line">
+            <div class="button">
+                <div class="button-data" data-key="4">4</div>
+            </div>
+            <div class="button">
+                <div class="button-data" data-key="5">5</div>
+            </div>
+            <div class="button">
+                <div class="button-data" data-key="6">6</div>
+            </div>
+            <div class="button signs minus">
+                <div class="button-data" data-key="-">-</div>
+            </div>
+        </div>
 
-.calc-js .line{
-    display: flex;
-    justify-content: space-between;
-    min-height: 64px;
-    margin-top: 10px;
-}
+        <div class="line">
+            <div class="button">
+                <div class="button-data" data-key="1">1</div>
+            </div>
+            <div class="button">
+                <div class="button-data" data-key="2">2</div>
+            </div>
+            <div class="button">
+                <div class="button-data" data-key="3">3</div>
+            </div>
+            <div class="button signs">
+                <div class="button-data" data-key="+">+</div>
+            </div>
+        </div>
 
-.calc-js .lm{
-    min-height: 33px;
-}
+        <div class="line">
+            <div class="button">
+                <div class="button-data" data-key="0">0</div>
+            </div>
+            <div class="button">
+                <div class="button-data" data-key=".">.</div>
+            </div>
+            <div class="button">
+                <div class="button-data" data-key="<">&lArr;</div>
+            </div>
+            <div class="button equals">
+                <div class="button-data" data-key="=">=</div>
+            </div>
+        </div>
 
-.calc-js .button{
-    font-size: 1.2em;
-    min-width: 70px;
-    border-radius: 5px;
-    color: #fff;
-    background-color: #4CAF50;
-    border: none;
-    box-shadow: 0 5px #999;
-    transition: 0.2s;
-}
+    </div>
+    <script src='js/js.js' charset='utf-8'></script>
+</body>
 
-.calc-js .button:active{
-    background-color: #3e8e41;
-    box-shadow: 0 1px #666;
-    transform: translateY(4px);
-}
-
-.calc-js .button div{
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.calc-js .memory{
-    border-radius: 4px;
-    box-shadow: 0 3px #999;
-    background-color: #878787;
-}
-
-.calc-js .memory:active{
-    background-color: #665c55;
-}
-
-.calc-js .signs{
-    background-color: #bababa;
-}
-
-.calc-js .signs:active{
-    background-color: #a1a1a1;
-}
-
-.calc-js .ac{
-    background-color: orange;
-}
-
-.calc-js .ac:active{
-    background-color: #ec7c26;
-}
-
-.calc-js .equals{
-    background-color: red;
-    font-weight: 700;
-}
-
-.calc-js .equals:active{
-    background-color: #c20000;
-}
-
-.calc-js .minus{
-    font-weight: 700;
-}
-
-.calc-js .division{
-    font-weight: 700;
-}
+</html>
