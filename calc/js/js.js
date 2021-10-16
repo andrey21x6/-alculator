@@ -3,11 +3,20 @@
 calc()
 
 function calc() {
+    const characterArray = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '.']
+    const characterArrayPlus = [...characterArray, 'ac', '%', '=', '<']
     const input = '.calc-js .out-window'
     const outExpression = '.calc-js .out-expression'
     const outMemory = '.calc-js .out-memory'
     const soundOff = document.querySelector('.calc-js .sound-off')
     const myAudio = new Audio
+    const clickMeaning = (event) => {
+
+        if (event.target.className === 'button-data') {
+            characterProcessing(event.target.dataset.key)
+        }
+    }
+
     let sound = '0'
     myAudio.src = 'wav/Windows_Feed_Discovered.wav'
 
@@ -21,38 +30,34 @@ function calc() {
 
     document.oncontextmenu = () => false
     soundOff.addEventListener('click', soundOnOff)
-    writeValueOutMemory()
     document.addEventListener('keydown', getKeyCharacter)
-
-    for (let value of document.querySelectorAll('.calc-js .button')) {
-        value.addEventListener('click', clickMeaning)
-    }
+    document.addEventListener('click', clickMeaning)
+    writeValueOutMemory()
 
     //----------------------------------------------------------------------------------------------------------------------------
 
     function characterProcessing(value) {
-        const array = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '.']
-        value = checkFirstCharacter(value)
+        let keyValue = checkFirstCharacter(value)
         setBorderColor()
 
         if (sound === '1') {
             myAudio.play()
         }
 
-        if (value === '+-' && readTheValueInput().length != 1 && readTheValueInput().slice(-1) === '+') {
-            value = '-'
+        if (keyValue === '+-' && readTheValueInput().length != 1 && readTheValueInput().slice(-1) === '+') {
+            keyValue = '-'
         }
         else {
 
-            if (readTheValueInput().slice(-2) === '+-' && checkingAValueTnAnArray(value, array, 10)) {
-                value = ''
+            if (readTheValueInput().slice(-2) === '+-' && checkingAValueTnAnArray(keyValue, characterArray, 10)) {
+                keyValue = ''
             }
-            else if (checkingAValueTnAnArray(value, array, 10) && checkingAValueTnAnArray(readTheValueInput().slice(-1), array, 10)) {
+            else if (checkingAValueTnAnArray(keyValue, characterArray, 10) && checkingAValueTnAnArray(readTheValueInput().slice(-1), characterArray, 10)) {
                 writeValueInput(readTheValueInput().slice(0, -1))
             }
         }
 
-        switch (value) {
+        switch (keyValue) {
             case '%': calculateThePercentage(); break
             case 'ac': writeValueInput(''); break
             case '<': writeValueInput(readTheValueInput().slice(0, -1)); break
@@ -69,9 +74,9 @@ function calc() {
                 }
                 break
             default:
-                if (value !== '+-') {
+                if (keyValue !== '+-') {
                     writeValueInput(removeSpaces(readTheValueInput()))
-                    writeValueInput(readTheValueInput() + value)
+                    writeValueInput(readTheValueInput() + keyValue)
                 }
         }
     }
@@ -111,16 +116,11 @@ function calc() {
         }
     }
 
-    function clickMeaning() {
-        characterProcessing(this.getAttribute('data'))
-    }
-
     function getKeyCharacter(event) {
-        const array = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', 'ac', '%', '=', '<', '.']
         let keySymbol = event.key
         keySymbol = keyValueReplacement(keySymbol)
 
-        if (checkingAValueTnAnArray(keySymbol, array)) {
+        if (checkingAValueTnAnArray(keySymbol, characterArrayPlus)) {
             characterProcessing(keySymbol)
         }
     }
