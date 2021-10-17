@@ -27,8 +27,6 @@ function calc() {
     document.addEventListener('keydown', getKeyCharacter)
     writeValueOutMemory()
 
-    //----------------------------------------------------------------------------------------------------------------------------
-
     function characterProcessing(value) {
         let keyValue = checkFirstCharacter(value)
         setBorderColor('rgba(0, 128, 0, 0.4)')
