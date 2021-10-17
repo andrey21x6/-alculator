@@ -27,6 +27,8 @@ function calc() {
     document.addEventListener('keydown', getKeyCharacter)
     writeValueOutMemory()
 
+    //----------------------------------------------------------------------------------------------------------------------------
+
     function characterProcessing(value) {
         let keyValue = checkFirstCharacter(value)
         setBorderColor('rgba(0, 128, 0, 0.4)')
@@ -73,10 +75,9 @@ function calc() {
     }
 
     function clickMeaning(event) {
-        let meaning = event.target.dataset.meaning   //meaning - содержит значение data-meaning в тэги div кнопки
 
-        if (meaning === 'button-data') {
-            characterProcessing(meaning)
+        if (event.target.className === 'button-data') {
+            characterProcessing(event.target.dataset.meaning)   //meaning - содержит значение data-meaning в тэги div кнопки
         }
     }
 
