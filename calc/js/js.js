@@ -10,13 +10,6 @@ function calc() {
     const outMemory = '.calc-js .out-memory'
     const soundOff = document.querySelector('.calc-js .sound-off')
     const myAudio = new Audio
-    const clickMeaning = (event) => {
-
-        if (event.target.className === 'button-data') {
-            characterProcessing(event.target.dataset.key)
-        }
-    }
-
     let sound = '0'
     myAudio.src = 'wav/Windows_Feed_Discovered.wav'
 
@@ -30,8 +23,8 @@ function calc() {
 
     document.oncontextmenu = () => false
     soundOff.addEventListener('click', soundOnOff)
-    document.addEventListener('keydown', getKeyCharacter)
     document.addEventListener('click', clickMeaning)
+    document.addEventListener('keydown', getKeyCharacter)
     writeValueOutMemory()
 
     //----------------------------------------------------------------------------------------------------------------------------
@@ -81,6 +74,23 @@ function calc() {
         }
     }
 
+    function clickMeaning(event) {
+        let meaning = event.target.dataset.meaning   //meaning - содержит значение data-meaning в тэги div кнопки
+
+        if (meaning === 'button-data') {
+            characterProcessing(meaning)
+        }
+    }
+
+    function getKeyCharacter(event) {
+        let meaning = event.key
+        meaning = keyValueReplacement(meaning)
+
+        if (checkingAValueTnAnArray(meaning, characterArrayPlus)) {
+            characterProcessing(meaning)
+        }
+    }
+
     function memoryComputation(operator) {
         const valInput = removeSpaces(readTheValueInput())
 
@@ -113,15 +123,6 @@ function calc() {
             else {
                 writeValueInput(numberWithSpaces(processingTheResult(eval(arrayNumbers[0] + operator + arrayNumbers[0] / 100 * arrayNumbers[1]))))
             }
-        }
-    }
-
-    function getKeyCharacter(event) {
-        let keySymbol = event.key
-        keySymbol = keyValueReplacement(keySymbol)
-
-        if (checkingAValueTnAnArray(keySymbol, characterArrayPlus)) {
-            characterProcessing(keySymbol)
         }
     }
 
